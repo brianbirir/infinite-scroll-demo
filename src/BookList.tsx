@@ -62,13 +62,22 @@ const BookItem: React.ForwardRefExoticComponent<BookItemProps> = React.forwardRe
 const BookList: React.FC<BookListProps> = ({ subject }) => {
   const [books, setBooks] = useState<BasicBook[]>([]);
   const [offset, setOffset] = useState(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const loadingCSS = {
+    height: '100px',
+    margin: '30px',
+  };
+  const loadingTextCSS = { display: isLoading ? 'block' : 'none' };
 
   const lastBook = useVisibility(
     (visible) => {
       if (visible) {
-        fetchBooks(subject).then((newBooks) => {
+        setIsLoading(true);
+        fetchBooks(subject, offset).then((newBooks) => {
           setOffset(offset + newBooks.length);
           setBooks([...books, ...newBooks]);
+          setIsLoading(false);
         });
       }
     },
@@ -79,20 +88,26 @@ const BookList: React.FC<BookListProps> = ({ subject }) => {
     fetchBooks(subject).then((newBooks) => {
       setBooks(newBooks);
       setOffset(newBooks.length);
+      setIsLoading(false);
     });
   }, [subject]);
 
   return (
-    <ul className="book-list">
-      {books.map((book) => (
-        <BookItem
-          key={book.key}
-          title={book.title}
-          description={book.description}
-          ref={books[books.length - 1].key === book.key ? lastBook : null}
-        />
-      ))}
-    </ul>
+    <>
+      <ul className="book-list">
+        {books.map((book) => (
+          <BookItem
+            key={book.key}
+            title={book.title}
+            description={book.description}
+            ref={books[books.length - 1].key === book.key ? lastBook : null}
+          />
+        ))}
+      </ul>
+      <div style={loadingCSS}>
+        <span style={loadingTextCSS}>Loading...</span>
+      </div>
+    </>
   );
 };
 
