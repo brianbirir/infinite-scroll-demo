@@ -2,6 +2,10 @@
 
 Demo of Infinite scroll in React based on https://www.darrencoxall.com/react/intersection-observer-component/ with a few adjustments.
 
+## What are the adjustments?
+
+- Adding a loading state that displays a UI feedback when data is loading.
+
 ## Available Scripts
 
 In the project directory, you can run:
