@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Demo of Infinite Scroll in React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Demo of Infinite scroll in React based on https://www.darrencoxall.com/react/intersection-observer-component/ with a few adjustments.
 
 ## Available Scripts
 
